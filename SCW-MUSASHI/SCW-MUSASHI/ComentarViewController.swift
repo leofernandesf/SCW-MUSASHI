@@ -57,6 +57,7 @@ class ComentarViewController: UIViewController {
                 
             ]
             let url = "http://191.168.20.202/scw/ws_issue/new_comment/\(id)"
+            print(url)
             //let postString = "{\"success\":\"true\", \"data\":{\"user\":\"\(user)\", \"comment\":\"\(tvComentario.text!)\"}}"
             Helper.POST(urlString: url, postString: parameters, completion: { (sucess) in
                 if let verificador = sucess["success"] as? Int {

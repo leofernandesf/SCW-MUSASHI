@@ -10,15 +10,37 @@ import UIKit
 
 class AtribuirViewController: UIViewController {
     
+    @IBOutlet weak var myTable: UITableView!
+    var id: Int?
+    
+    var users: [[String : Any]]?
     override func viewDidLoad() {
         super.viewDidLoad()
+        myTable.tableFooterView = UIView(frame: .zero)
+        print(id)
+        if let idIssue = id {
+            Helper.GET(urlString: "http://191.168.20.202/scw/ws_issue/get_assigned_users/\(idIssue)") { (result) in
+                self.pegarUser(json: result)
+            }
+        }
         
         // Do any additional setup after loading the view.
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func pegarUser(json: [String: Any]) {
+        self.users = [[String: Any]]()
+        let success = json["success"] as! Bool
+        print(success)
+        if success {
+            let data = json["employee"] as! [[String: Any]]
+            
+            self.users = data
+            DispatchQueue.main.async {
+                self.myTable.reloadData()
+            }
+        }
+        
+
     }
     
     @IBAction func voltar(_ sender: AnyObject) {
@@ -40,15 +62,15 @@ class AtribuirViewController: UIViewController {
 extension AtribuirViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellAtri") as! atribuirTableViewCell
-        
+        cell.user = users?[indexPath.row]
         let viewCustom = UIView()
-        viewCustom.backgroundColor = UIColor.clear
+        viewCustom.backgroundColor = UIColor.black.withAlphaComponent(0.1)
         cell.selectedBackgroundView = viewCustom
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return users?.count ?? 0
     }
 }
 

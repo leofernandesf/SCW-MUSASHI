@@ -11,21 +11,34 @@ import UIKit
 class EncaminharTableViewCell: UITableViewCell {
     
     @IBOutlet weak var lbText: UILabel!
+    var id: Int!
+    var node: Int!
     var informacao: [String : Any]? {
         didSet {
             
             if let colorBG = informacao?["bg_color"] as? String {
                 print(colorBG)
-                lbText.text = "vat"
                 let col = UIColor.black.HexToColor(hexString: colorBG)
                 self.backgroundColor = col
+            }
+            
+            if let titulo = informacao?["label1"] as? String {
+                self.lbText.text = titulo
+            }
+            
+            if let idJson = informacao?["id"] as? Int {
+                self.id = idJson
+            }
+            if let nodeJson = informacao?["node"] as? Int {
+                self.node = nodeJson
             }
             setBackGround()
         }
     }
     
     func setBackGround() {
-        
+        self.layer.cornerRadius = 25
+        self.clipsToBounds = true
     }
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -9,7 +9,9 @@
 import UIKit
 
 class PopUpViewController: UIViewController {
-    
+    var color: UIColor!
+    var idIssue: Int?
+    var idCategory: Int?
     @IBOutlet weak var myView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +20,9 @@ class PopUpViewController: UIViewController {
         myView.layer.borderColor = UIColor.white.cgColor
         myView.layer.cornerRadius = 25
         myView.clipsToBounds = true
-        
+        self.myView.backgroundColor = color
+        self.view.showAnimation(view: self.view)
+        print(idCategory)
         // Do any additional setup after loading the view.
     }
     
@@ -33,6 +37,28 @@ class PopUpViewController: UIViewController {
     }
     
     @IBAction func sim(_ sender: AnyObject) {
+        var id = Int()
+        var category = Int()
+        if let ID = idIssue {
+            id = ID
+        }
+        
+        if let CATEGORY = idCategory {
+            category = CATEGORY
+        }
+        let url = "http://191.168.20.202/scw/ws_issue/change_category/\(id)/\(category)"
+        print(url)
+        Helper.GET(urlString: url) { (result) in
+            print(result)
+            DispatchQueue.main.async {
+                for controller in self.navigationController!.viewControllers as Array {
+                        if controller.isKind(of: HomeViewController.self) {
+                       _ = self.navigationController?.popToViewController(controller as UIViewController, animated: true)
+                        break
+                    }
+                }
+            }
+        }
     }
     
     /*

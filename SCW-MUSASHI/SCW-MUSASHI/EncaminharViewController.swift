@@ -13,14 +13,30 @@ class EncaminharViewController: UIViewController {
     @IBOutlet weak var myTable: UITableView!
     var node = 0
     var nodes : [[String : Any]]?
+    var results: [String : Any]?
+    var color = UIColor()
+    var id: Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        myTable.tableFooterView = UIView(frame: .zero)
         
-        Helper.GET(urlString: "http://191.168.20.202/scw/ws_toten/get_issues_categories") { (result) in
-            self.mostrarNodes(pais: result)
-        }
+        pegarInformacaio()
+        print(id)
         // Do any additional setup after loading the view.
+    }
+    
+    func pegarInformacaio() {
+        if results == nil {
+            Helper.GET(urlString: "http://191.168.20.202/scw/ws_toten/get_issues_categories") { (result) in
+                self.results = result
+                self.mostrarNodes(pais: self.results!)
+            }
+        } else {
+            self.mostrarNodes(pais: self.results!)
+        }
+        
+        
     }
     
     func mostrarNodes(pais: [String : Any]) {
@@ -33,10 +49,11 @@ class EncaminharViewController: UIViewController {
                 }
             }
         }
-        
         DispatchQueue.main.async {
             self.myTable.reloadData()
         }
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -67,19 +84,86 @@ class EncaminharViewController: UIViewController {
 
 
 extension EncaminharViewController : UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return nodes?.count ?? 0
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellEnc") as! EncaminharTableViewCell
-        cell.informacao = nodes?[indexPath.row]
+        cell.informacao = nodes?[indexPath.section]
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return nodes?.count ?? 0
+        return 1
     }
 }
 
 extension EncaminharViewController : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let viewSection = UIView()
+        viewSection.backgroundColor = UIColor.clear
+        return viewSection
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 20
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.section)
+        if let id = nodes?[indexPath.section]["id"] as? Int {
+            self.node = id
+        }
+        
+        if let colorBG = nodes?[indexPath.section]["bg_color"] as? String {
+            print(colorBG)
+            self.color = UIColor.black.HexToColor(hexString: colorBG)
+        }
+        
+        
+        self.proximaView()
+//        print("vi")
+//        //let cell = tableView.cellForRow(at: indexPath) as! EncaminharTableViewCell
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "cellEnc", for: indexPath) as! EncaminharTableViewCell
+//        //let cell = tableView.dequeueReusableCell(withIdentifier: "cellEnc") as! EncaminharTableViewCell
+//        self.node = cell.id
+//        self.color = cell.backgroundColor!
+//        print(cell.id)
+//        self.proximaView()
+    }
+    
+    func proximaView() {
+        
+        let datas = results?["data"] as! [[String: Any]]
+        var nodes2 = [[String : Any]]()
+        for data in datas {
+            if let nodee = data["node"] as? Int {
+                if nodee == node {
+                    nodes2.append(data)
+                }
+            }
+        }
+        if nodes2.count != 0 {
+            let vc = self.storyboard!.instantiateViewController(withIdentifier: "encaminhar") as! EncaminharViewController
+            vc.results = results
+            vc.node = node
+            vc.id = id
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "popUp") as! PopUpViewController
+            controller.color = color
+            controller.idCategory = node
+            controller.idIssue = self.id
+            self.addChildViewController(controller)
+            controller.view.frame = self.view.frame
+            self.view.addSubview(controller.view)
+            controller.didMove(toParentViewController: self)
+        }
+    }
+    
     
 }
 
