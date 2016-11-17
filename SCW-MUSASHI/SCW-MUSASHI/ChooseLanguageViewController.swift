@@ -10,6 +10,8 @@ import UIKit
 
 class ChooseLanguageViewController: UIViewController {
     
+    @IBOutlet weak var loada: UIActivityIndicatorView!
+    @IBOutlet weak var load: UIView!
     @IBOutlet weak var lbLanguage2: UILabel!
     @IBOutlet weak var lbLanguage1: UILabel!
     @IBOutlet weak var bt1: UIButton!
@@ -21,6 +23,7 @@ class ChooseLanguageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loada.startAnimating()
         bt1.setImage(checkOff, for: .normal)
         bt2.setImage(checkOn, for: .normal)
         Helper.GET(urlString: "http://191.168.20.202/scw/ws_config/get_labels") { (jsonRecebe) in
@@ -47,6 +50,8 @@ class ChooseLanguageViewController: UIViewController {
                     if let value = y["value"]as? [String] {
                         print(value)
                         DispatchQueue.main.async {
+                            self.loada.stopAnimating()
+                            self.load.isHidden = true
                             self.lbLanguage1.text = value[0]
                             self.lbLanguage2.text = value[1]
                         }

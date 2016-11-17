@@ -36,6 +36,8 @@ class Helper {
                 print("response = \(response)")
                 
             } else {
+                let responseString = String(data: data, encoding: .utf8)
+                print(responseString)
                 do {
                     
                     let json = try JSONSerialization.jsonObject(with: data, options: []) as! Dictionary<String, AnyObject>
@@ -138,6 +140,13 @@ extension UIColor {
         return HexToColor(hexString: "#4F9E60")
     }
     
+    var atribuirBG: UIColor {
+        return HexToColor(hexString: "#282D36")
+    }
+    
+    var laranja: UIColor {
+        return HexToColor(hexString: "#E1891B")
+    }
     
     
     func HexToColor(hexString: String, alpha:CGFloat? = 1.0) -> UIColor {

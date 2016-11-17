@@ -10,6 +10,8 @@ import UIKit
 
 class EncaminharViewController: UIViewController {
     
+    @IBOutlet weak var loada: UIActivityIndicatorView!
+    @IBOutlet weak var load: UIView!
     @IBOutlet weak var myTable: UITableView!
     var node = 0
     var nodes : [[String : Any]]?
@@ -20,9 +22,8 @@ class EncaminharViewController: UIViewController {
         super.viewDidLoad()
         
         myTable.tableFooterView = UIView(frame: .zero)
-        
+        self.loada.startAnimating()
         pegarInformacaio()
-        print(id)
         // Do any additional setup after loading the view.
     }
     
@@ -43,13 +44,18 @@ class EncaminharViewController: UIViewController {
         let datas = pais["data"] as! [[String: Any]]
         self.nodes = [[String : Any]]()
         for data in datas {
-            if let nodee = data["node"] as? Int {
-                if nodee == node {
-                    self.nodes?.append(data)
+            if let nodee = data["node"] as? Int, let deleted = data["deleted"] as? Int {
+                if deleted == 0 {
+                    if nodee == node {
+                        self.nodes?.append(data)
+                    }
                 }
+                
             }
         }
         DispatchQueue.main.async {
+            self.loada.stopAnimating()
+            self.load.isHidden = true
             self.myTable.reloadData()
         }
         
@@ -65,10 +71,6 @@ class EncaminharViewController: UIViewController {
         _ = self.navigationController?.popViewController(animated: true)
     }
     
-    func chamarPropriaView() {
-        let vc = self.storyboard!.instantiateViewController(withIdentifier: "encaminhar") as! EncaminharViewController
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
     
     /*
      // MARK: - Navigation

@@ -10,6 +10,8 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    @IBOutlet weak var lAnimation: UIActivityIndicatorView!
+    @IBOutlet weak var load: UIView!
     @IBOutlet weak var tfEmail: UITextField!
     @IBOutlet weak var tfSenha: UITextField!
     let defaults = UserDefaults.standard
@@ -28,10 +30,10 @@ class LoginViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         Layout.tfLayout(tfs: [tfEmail,tfSenha])
-        print(defaults.object(forKey: "logado"))
         
-        let verificador = defaults.object(forKey: "logado") as? Int
-        print(verificador)
+        
+        let verificador = defaults.object(forKey: "logado") as! Int
+        
         if verificador == 1 {
             let vc = self.storyboard!.instantiateViewController(withIdentifier: "home") as!HomeViewController
             self.navigationController?.pushViewController(vc, animated: false)
@@ -40,6 +42,8 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func Entrar(_ sender: AnyObject) {
+        self.load.isHidden = false
+        self.lAnimation.startAnimating()
         let url = "http://191.168.20.202/scw/ws_mobile/login/"
         //let postString = "{\"success\":\"true\", \"data\":{\"user\":\"\(tfEmail.text!)\", \"pass\":\"\(tfSenha.text!)\"}}"
         
@@ -52,31 +56,53 @@ class LoginViewController: UIViewController {
             
         ]
         Helper.POST(urlString: url, postString: parameters) { (success) in
+            print(success)
             self.verificar(strings: success)
             
         }
     }
     
     func verificar(strings: [String: Any]) {
-        let success = strings["success"] as! Int
+        let success = strings["success"] as! Bool
         var userData = Dictionary<String, AnyObject>()
-        if success == 1 {
+        if success == true {
             print(success)
             userData = strings["data"] as! Dictionary<String, AnyObject>
             let job_tittle = userData["job_tittle"] as! String
             if job_tittle == "Admin" || job_tittle == "Admin" {
                 self.defaults.set(3, forKey: "contMenu")
+                
+                
             } else {
                 self.defaults.set(2, forKey: "contMenu")
             }
+            self.defaults.set(job_tittle, forKey: "jobTitle")
+            salvarUser(user: userData)
             DispatchQueue.main.async {
                 self.defaults.set(1, forKey: "logado")
+                self.lAnimation.stopAnimating()
+                self.load.isHidden = true
                 let vc = self.storyboard!.instantiateViewController(withIdentifier: "chooseLanguage") as! ChooseLanguageViewController
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             //print(userData)
         }
     }
+    
+    func salvarUser(user: Dictionary<String, AnyObject>) {
+        if let userId = user["id"] as? Int {
+            self.defaults.set(userId, forKey: "userId")
+        }
+        
+        if let userNome = user["name"] as? String {
+            self.defaults.set(userNome, forKey: "userName")
+        }
+        
+        if let userLogin = user["login"] as? String {
+            self.defaults.set(userLogin, forKey: "login")
+        }
+     }
+    
     
     /*
      // MARK: - Navigation

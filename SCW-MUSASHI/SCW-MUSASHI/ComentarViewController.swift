@@ -11,6 +11,13 @@ import UIKit
 class ComentarViewController: UIViewController {
     @IBOutlet weak var lbTitulo: UILabel!
     @IBOutlet weak var tvComentario: UITextView!
+    
+    @IBOutlet weak var load: UIView!
+    
+    @IBOutlet weak var loada: UIActivityIndicatorView!
+    
+    
+    let defaults = UserDefaults.standard
     var idIssue: Int!
     var idUser = Int()
     var titulo: Int!
@@ -46,23 +53,29 @@ class ComentarViewController: UIViewController {
     
     @IBAction func enviarComent(_ sender: AnyObject) {
         print(idIssue)
+        dismissKeyboard()
+        load.isHidden = false
+        loada.startAnimating()
         if let id = idIssue {
-            let user = titulo as Int
+            let userId = defaults.object(forKey: "userName") as! String
             let parameters: [String: Any] = [
                 "success" : true,
                 "data": [
-                    "user" : user,
+                    "user" : userId,
                     "comment": tvComentario.text!
                 ]
                 
             ]
+            print(parameters)
             let url = "http://191.168.20.202/scw/ws_issue/new_comment/\(id)"
             print(url)
             //let postString = "{\"success\":\"true\", \"data\":{\"user\":\"\(user)\", \"comment\":\"\(tvComentario.text!)\"}}"
             Helper.POST(urlString: url, postString: parameters, completion: { (sucess) in
-                if let verificador = sucess["success"] as? Int {
-                    if verificador == 1 {
+                if let verificador = sucess["success"] as? Bool {
+                    if verificador == true {
                         DispatchQueue.main.async {
+                            self.loada.stopAnimating()
+                            self.load.isHidden = true
                             _ = self.navigationController?.popViewController(animated: true)
                         }
                         

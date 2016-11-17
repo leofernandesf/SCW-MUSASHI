@@ -10,12 +10,19 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    @IBOutlet weak var loada: UIActivityIndicatorView!
+    @IBOutlet weak var load: UIView!
     @IBOutlet weak var ptSearch: UIButton!
     @IBOutlet weak var myTable: UITableView!
     @IBOutlet weak var myCollection: UICollectionView!
+    @IBOutlet weak var tfSearch: UITextField!
+    
     var chamadas : [[String: Any]]?
     var consultas: [[String: Any]]?
+    var pendencias: [[String: Any]]?
+    
     var mostrarInformacoes: [[String: Any]]?
+    var mostrarInformacoesAux: [[String: Any]]?
     var envia: [String: Any]!
     let defaults = UserDefaults.standard
     var cont = 2
@@ -30,24 +37,17 @@ class HomeViewController: UIViewController {
             cont = contMenu
         }
         self.myTable.tableFooterView = UIView(frame: .zero)
+        tfSearch.delegate = self
         // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        load.isHidden = false
+        loada.startAnimating()
         Helper.GET(urlString: "http://191.168.20.202/scw/ws_issue/show") { (recebeJson) in
-            //            self.chamadas = chamadas
-            //            self.consultas = consultas
-            //            print("chamadas: \(self.chamadas?.count) - consultas: \(self.consultas?.count)")
-            //            if self.index.item == 0 {
-            //                self.mostrarInformacoes = self.chamadas
-            //            } else {
-            //                self.mostrarInformacoes = self.consultas
-            //            }
-            //            DispatchQueue.main.async {
-            //                self.myTable.reloadData()
-            //            }
+
+            print(recebeJson)
             self.separaChamadas(json: recebeJson)
             
         }
@@ -70,14 +70,20 @@ class HomeViewController: UIViewController {
     
     func separaChamadas(json: Dictionary<String, AnyObject>) {
         let x = json["data"] as! [[String: Any]]
+        print(x.count)
         chamadas = [[String: Any]]()
         consultas = [[String: Any]]()
+        pendencias = [[String : Any]]()
         for y in x {
-            if let query = y["query"] as? Int {
-                if query == 1 {
+            if let query = y["query"] as? Bool, let status = y["status_code"] as? Int {
+                if query == true {
                     self.chamadas?.append(y)
                 } else {
                     self.consultas?.append(y)
+                }
+                
+                if status == 3 || status == 4 {
+                    self.pendencias?.append(y)
                 }
             }
         }
@@ -86,8 +92,15 @@ class HomeViewController: UIViewController {
             self.mostrarInformacoes = self.chamadas
         } else if self.index.item == 1{
             self.mostrarInformacoes = self.consultas
+        } else {
+            self.mostrarInformacoes = self.pendencias
         }
+        
+        
         DispatchQueue.main.async {
+            self.loada.stopAnimating()
+            self.load.isHidden = true
+            self.mostrarInformacoesAux = self.mostrarInformacoes
             self.myTable.reloadData()
         }
     }
@@ -138,6 +151,40 @@ class HomeViewController: UIViewController {
             vc.recebe = envia
         }
     }
+    
+    
+    
+    @IBAction func bucar(_ sender: Any) {
+        if (tfSearch.text?.isEmpty)! {
+            DispatchQueue.main.async {
+                self.mostrarInformacoes = self.mostrarInformacoesAux
+                self.myTable.reloadData()
+            }
+            
+        } else {
+            let text: Int? = Int(tfSearch.text!)
+            search(textBusca: text!)
+            
+            tfSearch.text = ""
+        }
+        dismissKeyboard()
+    }
+    
+    func search(textBusca: Int) {
+        var busca = [[String : Any]]()
+        for informacao in mostrarInformacoes! {
+            if let id = informacao["employee"] as? Int {
+                if id == textBusca {
+                    busca.append(informacao)
+                }
+            }
+        }
+        DispatchQueue.main.async {
+            self.mostrarInformacoes = busca
+            self.myTable.reloadData()
+        }
+        
+    }
     /*
      // MARK: - Navigation
      
@@ -148,6 +195,13 @@ class HomeViewController: UIViewController {
      }
      */
     
+}
+
+extension HomeViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
 }
 
 extension HomeViewController: UICollectionViewDataSource {
@@ -169,7 +223,10 @@ extension HomeViewController: UICollectionViewDelegate {
             self.mostrarInformacoes = self.chamadas
         } else if indexPath.item == 1 {
             self.mostrarInformacoes = self.consultas
+        } else if indexPath.item == 2 {
+            self.mostrarInformacoes = self.pendencias
         }
+        self.mostrarInformacoesAux = self.mostrarInformacoes
         myTable.reloadData()
     }
 }

@@ -13,9 +13,14 @@ class atribuirTableViewCell: UITableViewCell {
     @IBOutlet weak var ivCheck: UIImageView!
     @IBOutlet weak var lbNome: UILabel!
     @IBOutlet weak var lbCargo: UILabel!
+    @IBOutlet weak var lbNumero: UILabel!
+    
+    var assigned: Int?
     var user : [String : Any]? {
         didSet {
-            print(user)
+            
+            self.lbNumero.layer.cornerRadius = self.lbNumero.frame.size.width/2
+            self.lbNumero.clipsToBounds = true
             if let nome = user?["name"] as? String {
                 print(nome)
                 self.lbNome.text = nome
@@ -24,6 +29,18 @@ class atribuirTableViewCell: UITableViewCell {
             if let cargo = user?["function"] as? String {
                 print(cargo)
                 self.lbCargo.text = cargo
+            }
+            
+            if let assigned = user?["assigned"] as? Int {
+                self.assigned = assigned
+                if assigned == 1 {
+                    ivCheck.image = #imageLiteral(resourceName: "icon_checkbox_select")
+                    
+                } else {
+                    ivCheck.image = #imageLiteral(resourceName: "icon_checkbox")
+                    lbNumero.isHidden = true
+                }
+                lbNumero.text = "\(assigned)"
             }
         }
     }

@@ -12,6 +12,11 @@ class PopUpViewController: UIViewController {
     var color: UIColor!
     var idIssue: Int?
     var idCategory: Int?
+    
+    
+    @IBOutlet weak var loada: UIActivityIndicatorView!
+    @IBOutlet weak var load: UIView!
+    
     @IBOutlet weak var myView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +42,8 @@ class PopUpViewController: UIViewController {
     }
     
     @IBAction func sim(_ sender: AnyObject) {
+        self.load.isHidden = false
+        self.loada.startAnimating()
         var id = Int()
         var category = Int()
         if let ID = idIssue {
@@ -50,6 +57,8 @@ class PopUpViewController: UIViewController {
         print(url)
         Helper.GET(urlString: url) { (result) in
             print(result)
+            self.loada.stopAnimating()
+            self.load.isHidden = true
             DispatchQueue.main.async {
                 for controller in self.navigationController!.viewControllers as Array {
                         if controller.isKind(of: HomeViewController.self) {

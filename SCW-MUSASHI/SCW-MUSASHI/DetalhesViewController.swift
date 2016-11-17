@@ -17,7 +17,9 @@ class DetalhesViewController: UIViewController {
     @IBOutlet weak var btComentar: UIButton!
     @IBOutlet weak var btAceitar: UIButton!
     @IBOutlet weak var btReject: UIButton!
+    @IBOutlet weak var btDone: UIButton!
     
+    let userDefault = UserDefaults.standard
     var recebe: [String: Any]!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +28,7 @@ class DetalhesViewController: UIViewController {
         let usuario = recebe["employee"] as! Int
         print(usuario)
         self.lbUsiario.text = "#\(usuario)"
-        setButtons(bts: [btComentar, btAceitar])
+        setButtons(bts: [btComentar, btAceitar,btReject,btDone])
         //myTable.tableFooterView = UIView(frame: .zero)
         
         //        if let title = recebe["employee"] as? String {
@@ -75,6 +77,52 @@ class DetalhesViewController: UIViewController {
     @IBAction func aceitar(_ sender: AnyObject) {
         performSegue(withIdentifier: "atribuir", sender: self)
     }
+    
+    @IBAction func rejeitar(_ sender: Any) {
+        let contMenu = userDefault.object(forKey: "contMenu") as! Int
+        var status = Int()
+        if contMenu == 2 {
+            status = 4
+        } else {
+            status = 5
+        }
+        post(status: status)
+    }
+    
+    @IBAction func done(_ sender: Any) {
+        let contMenu = userDefault.object(forKey: "contMenu") as! Int
+        var status = Int()
+        if contMenu == 2 {
+            status = 3
+        } else {
+            status = 6
+        }
+        post(status: status)
+    }
+    
+    func post(status: Int) {
+        if let id = recebe["id"] as? Int, let userNome = userDefault.object(forKey: "userName") as? String {
+            
+            let parameters: [String: Any] = ["id": id, "user": userNome, "status": status]
+            print(parameters)
+            Helper.POST(urlString: "http://191.168.20.202/scw/ws_mobile/set_status/", postString: parameters, completion: { (result) in
+                print(result)
+                if let success = result["success"] as? Bool {
+                    if success {
+                        DispatchQueue.main.async {
+                            _ = self.navigationController?.popViewController(animated: true)
+                        }
+                    }
+                }
+            })
+        }
+        
+    }
+    
+    
+    
+    
+    
     
     // MARK: - Navigation
     
