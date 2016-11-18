@@ -10,9 +10,10 @@ import UIKit
 
 class SobreViewController: UIViewController {
     
+    @IBOutlet weak var lbTitulo: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        lbTitulo.text = DAO.LinguagemSalvas(str: "sobre")
         // Do any additional setup after loading the view.
     }
     

@@ -15,6 +15,7 @@ class AtribuirViewController: UIViewController {
     @IBOutlet weak var load: UIView!
     @IBOutlet weak var loada: UIActivityIndicatorView!
     
+    @IBOutlet weak var btConfirmar: UIButton!
     var id: Int?
     var ids = [Any]()
     var users: [[String : Any]]?
@@ -28,6 +29,8 @@ class AtribuirViewController: UIViewController {
                 self.pegarUser(json: result)
             }
         }
+        
+        btConfirmar.setTitle(DAO.LinguagemSalvas(str: "confirmar"), for: .normal)
         // Do any additional setup after loading the view.
     }
     
@@ -57,8 +60,8 @@ class AtribuirViewController: UIViewController {
     func pegarAssigned() {
         ids = [Any]()
         for user in users! {
-            if let assigned = user["assigned"] as? Int, let userId = user["id"]  {
-                if assigned == 1 {
+            if let assigned = user["assigned"] as? Bool, let userId = user["id"]  {
+                if assigned == true {
                     ids.append(userId)
                     
                 }
@@ -87,6 +90,7 @@ class AtribuirViewController: UIViewController {
         let parameters: [String: Any] = [ "success" : true, "data": ids ]
         print(parameters)
         if let idIssue = id {
+            print(idIssue)
             Helper.POST(urlString: "http://191.168.20.202/scw/ws_issue/set_assigned_users/\(idIssue)", postString: parameters, completion: { (result) in
                 print(result)
             })
@@ -110,9 +114,10 @@ extension AtribuirViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellAtri") as! atribuirTableViewCell
         cell.user = users?[indexPath.row]
-        let viewCustom = UIView()
-        viewCustom.backgroundColor = UIColor.black.withAlphaComponent(0.1)
-        cell.selectedBackgroundView = viewCustom
+//        let viewCustom = UIView()
+////        viewCustom.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+////        viewCustom.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+//        cell.selectedBackgroundView = viewCustom
         return cell
     }
     
@@ -123,19 +128,23 @@ extension AtribuirViewController : UITableViewDataSource {
 
 extension AtribuirViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.myTable.deselectRow(at: indexPath, animated: false)
         let cell = tableView.cellForRow(at: indexPath) as! atribuirTableViewCell
         if let assigned = cell.assigned  {
-            if assigned == 1 {
-                cell.assigned = 0
+            if assigned == true {
+                cell.assigned = false
                 cell.ivCheck.image = #imageLiteral(resourceName: "icon_checkbox")
-                self.users?[indexPath.row]["assigned"] = 0
+                self.users?[indexPath.row]["assigned"] = false
             } else {
-                cell.assigned = 1
+                cell.assigned = true
                 cell.ivCheck.image = #imageLiteral(resourceName: "icon_checkbox_select")
-                self.users?[indexPath.row]["assigned"] = 1
+                self.users?[indexPath.row]["assigned"] = true
             }
         }
+        
+        
     }
+    
     
     
 }

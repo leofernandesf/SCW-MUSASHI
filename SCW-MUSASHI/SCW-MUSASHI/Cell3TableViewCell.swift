@@ -39,39 +39,50 @@ class Cell3TableViewCell: UITableViewCell {
     
     func setComentarios(comentarios : [String : Any]) {
         print(comentarios)
-        if let data = comentarios["data"] as? [[String : Any]] {
-            var str = ""
-            var user = String()
-            var date = String()
-            var comentario = String()
-            for coment in data {
-                if let user2 = coment["User"] as? String {
-                    user = user2
+        if let sucess = comentarios["success"] as? Bool {
+            if sucess == true {
+                if let data = comentarios["data"] as? [[String : Any]] {
+                    var str = ""
+                    var user = String()
+                    var date = String()
+                    var comentario = String()
+                    for coment in data {
+                        if let user2 = coment["User"] as? String {
+                            user = user2
+                        }
+                        
+                        if let coment2 = coment["Comment"] as? String {
+                            comentario = coment2
+                        }
+                        
+                        if let dia = coment["Date"] as? String {
+                            //                let dateFormatter = DateFormatter()
+                            //                dateFormatter.dateFormat = "YYYY-MM-dd HH:mm"
+                            //                let myDate = dateFormatter.date(from: dia)!
+                            //
+                            //                dateFormatter.dateFormat = "dd/MM/YYYY - HH:mm"
+                            //                date = dateFormatter.string(from: myDate)
+                            date = dia
+                        }
+                        str += "\(user)\t\(date)\n\(comentario)\n\n"
+                    }
+                    print(str)
+                    DispatchQueue.main.async {
+                        self.loada.stopAnimating()
+                        self.load.isHidden = true
+                        self.tvComentarios.text = str
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.loada.stopAnimating()
+                    self.load.isHidden = true
                 }
                 
-                if let coment2 = coment["Comment"] as? String {
-                    comentario = coment2
-                }
-                
-                if let dia = coment["Date"] as? String {
-                    //                let dateFormatter = DateFormatter()
-                    //                dateFormatter.dateFormat = "YYYY-MM-dd HH:mm"
-                    //                let myDate = dateFormatter.date(from: dia)!
-                    //
-                    //                dateFormatter.dateFormat = "dd/MM/YYYY - HH:mm"
-                    //                date = dateFormatter.string(from: myDate)
-                    date = dia
-                }
-                str += "\(user)\t\(date)\n\(comentario)\n\n"
-                print(coment["Date"])
             }
-            print(str)
-            DispatchQueue.main.async {
-                self.loada.stopAnimating()
-                self.load.isHidden = true
-                self.tvComentarios.text = str
-            }
+            
         }
+        
         
         
     }

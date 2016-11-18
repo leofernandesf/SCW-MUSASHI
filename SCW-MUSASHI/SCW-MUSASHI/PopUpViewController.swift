@@ -14,8 +14,11 @@ class PopUpViewController: UIViewController {
     var idCategory: Int?
     
     
+    @IBOutlet weak var lbMensagem: UILabel!
     @IBOutlet weak var loada: UIActivityIndicatorView!
     @IBOutlet weak var load: UIView!
+    @IBOutlet weak var btNao: UIButton!
+    @IBOutlet weak var btSim: UIButton!
     
     @IBOutlet weak var myView: UIView!
     override func viewDidLoad() {
@@ -28,6 +31,9 @@ class PopUpViewController: UIViewController {
         self.myView.backgroundColor = color
         self.view.showAnimation(view: self.view)
         print(idCategory)
+        lbMensagem.text = DAO.LinguagemSalvas(str: "popUp")
+        btNao.setTitle(DAO.LinguagemSalvas(str: "nao"), for: .normal)
+        btSim.setTitle(DAO.LinguagemSalvas(str: "sim"), for: .normal)
         // Do any additional setup after loading the view.
     }
     

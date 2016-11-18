@@ -29,6 +29,19 @@ class DetalhesViewController: UIViewController {
         print(usuario)
         self.lbUsiario.text = "#\(usuario)"
         setButtons(bts: [btComentar, btAceitar,btReject,btDone])
+        
+        btComentar.setTitle(DAO.LinguagemSalvas(str: "comentar"), for: .normal)
+        btAceitar.setTitle(DAO.LinguagemSalvas(str: "aceitar"), for: .normal)
+        
+        if let contMenu = userDefault.object(forKey: "contMenu") as? Int {
+            if contMenu == 3 {
+                btReject.setTitle(DAO.LinguagemSalvas(str: "close"), for: .normal)
+                btDone.setTitle(DAO.LinguagemSalvas(str: "finish"), for: .normal)
+            } else {
+                btReject.setTitle(DAO.LinguagemSalvas(str: "reject"), for: .normal)
+                btDone.setTitle(DAO.LinguagemSalvas(str: "done"), for: .normal)
+            }
+        }
         //myTable.tableFooterView = UIView(frame: .zero)
         
         //        if let title = recebe["employee"] as? String {

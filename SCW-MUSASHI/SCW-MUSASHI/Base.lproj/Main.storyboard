@@ -25,7 +25,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Ta-JC-lBQ">
                                 <rect key="frame" x="36.5" y="436" width="247" height="62"/>
-                                <state key="normal" title="ENTRAR" backgroundImage="bt_verde_unselect">
+                                <state key="normal" title="LOG IN" backgroundImage="bt_verde_unselect">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -47,7 +47,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Senha" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OIc-fJ-BBW">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OIc-fJ-BBW">
                                 <rect key="frame" x="16" y="292.5" width="288" height="63"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -287,6 +287,8 @@
                     <connections>
                         <outlet property="bt1" destination="Ffj-2n-ohj" id="YTa-EA-OSA"/>
                         <outlet property="bt2" destination="8US-dv-oou" id="emn-fa-y38"/>
+                        <outlet property="lbChoose1" destination="Kw9-fk-hac" id="vUE-Fq-4Q1"/>
+                        <outlet property="lbChoose2" destination="OvN-So-yJ6" id="Cp5-0y-J03"/>
                         <outlet property="lbLanguage1" destination="4TU-kY-5kB" id="COq-3M-mCh"/>
                         <outlet property="lbLanguage2" destination="ceR-Xm-42q" id="c0U-im-HuE"/>
                         <outlet property="load" destination="Mbx-xS-h12" id="ZFz-Ay-LDV"/>
@@ -618,9 +620,9 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Operador:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bgn-q2-kfQ">
-                                                    <rect key="frame" x="8" y="39" width="86" height="21"/>
+                                                    <rect key="frame" x="8" y="39" width="99" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="86" id="btg-BG-SCi"/>
+                                                        <constraint firstAttribute="width" constant="99" id="btg-BG-SCi"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -642,7 +644,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yAs-4x-vrb">
-                                                    <rect key="frame" x="94" y="39" width="218" height="21"/>
+                                                    <rect key="frame" x="110" y="39" width="202" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -657,7 +659,7 @@
                                             <constraints>
                                                 <constraint firstItem="sKa-DO-Wj4" firstAttribute="trailing" secondItem="yAs-4x-vrb" secondAttribute="trailing" id="1Ud-Zm-ADT"/>
                                                 <constraint firstItem="sKa-DO-Wj4" firstAttribute="trailing" secondItem="Typ-Fk-qhT" secondAttribute="trailingMargin" id="CGh-97-vna"/>
-                                                <constraint firstItem="yAs-4x-vrb" firstAttribute="leading" secondItem="bgn-q2-kfQ" secondAttribute="trailing" id="F61-2N-2bh"/>
+                                                <constraint firstItem="yAs-4x-vrb" firstAttribute="leading" secondItem="bgn-q2-kfQ" secondAttribute="trailing" constant="3" id="F61-2N-2bh"/>
                                                 <constraint firstItem="hSN-aF-pwY" firstAttribute="leading" secondItem="RbT-GL-E00" secondAttribute="trailing" constant="1" id="MGx-va-5yU"/>
                                                 <constraint firstItem="ugu-zt-Eu7" firstAttribute="leading" secondItem="bgn-q2-kfQ" secondAttribute="leading" id="SOW-te-COw"/>
                                                 <constraint firstItem="bgn-q2-kfQ" firstAttribute="top" secondItem="ugu-zt-Eu7" secondAttribute="bottom" constant="3" id="WZ0-6h-KhG"/>
@@ -674,9 +676,12 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.092812977729999996" green="0.12853085989999999" blue="0.16288146379999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
+                                            <outlet property="dataHora" destination="RbT-GL-E00" id="17S-xj-J3c"/>
                                             <outlet property="lbLinha" destination="sKa-DO-Wj4" id="trf-Xh-Vya"/>
                                             <outlet property="lbOperador" destination="yAs-4x-vrb" id="UrN-cV-gZj"/>
                                             <outlet property="ldData" destination="hSN-aF-pwY" id="uvb-79-8eG"/>
+                                            <outlet property="operador" destination="bgn-q2-kfQ" id="M74-pr-6P7"/>
+                                            <outlet property="sector" destination="ugu-zt-Eu7" id="OeA-Fl-Yoz"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellDetalhe2" rowHeight="79" id="dYs-GV-SiC" customClass="Cell2TableViewCell" customModule="SCW_MUSASHI" customModuleProvider="target">
@@ -972,6 +977,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="lbTitulo" destination="POD-Cd-2P5" id="dJL-pF-aVp"/>
                         <outlet property="load" destination="5Po-71-lFe" id="TZn-fH-Fj1"/>
                         <outlet property="loada" destination="Rpq-I5-nvx" id="M6I-dY-s7W"/>
                         <outlet property="myTable" destination="GXq-Xt-M2i" id="6Fr-Xu-gCx"/>
@@ -1042,7 +1048,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="banner_bluer" translatesAutoresizingMaskIntoConstraints="NO" id="hb9-2N-hic">
                                 <rect key="frame" x="0.0" y="167.5" width="320" height="57"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENVIAR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KPB-Gq-WYL">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SEND" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KPB-Gq-WYL">
                                 <rect key="frame" x="31.5" y="180" width="257" height="26.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -1087,6 +1093,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btNao" destination="Pwg-dY-vA0" id="cNT-5t-xFL"/>
+                        <outlet property="btSim" destination="emh-kW-ep4" id="0Ke-3r-r1q"/>
+                        <outlet property="lbMensagem" destination="fsZ-eD-l6g" id="iD3-Sh-MNE"/>
                         <outlet property="load" destination="ZN2-oV-UPU" id="FRK-z4-4dm"/>
                         <outlet property="loada" destination="rnv-1N-xVy" id="3dL-KS-kYW"/>
                         <outlet property="myView" destination="vjE-dO-sdz" id="AXO-e6-tSr"/>
@@ -1323,6 +1332,11 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f7n-l4-dwL">
+                                                    <rect key="frame" x="56" y="-30" width="28" height="28"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="HJg-SY-dnk" firstAttribute="centerY" secondItem="GCG-8k-G5Y" secondAttribute="centerY" id="HZb-hT-S32"/>
@@ -1387,8 +1401,14 @@
                             <constraint firstItem="QBd-F0-ljl" firstAttribute="height" secondItem="Bic-R9-TIw" secondAttribute="height" multiplier="0.695" id="zSk-uE-RiW"/>
                             <constraint firstItem="pao-QH-to2" firstAttribute="top" secondItem="Bic-R9-TIw" secondAttribute="top" id="zpd-ka-rM5"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="cJV-Cy-B63"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
+                        <outlet property="btConfirmar" destination="Nyb-FS-a3a" id="FFF-h8-z0b"/>
                         <outlet property="load" destination="cJV-Cy-B63" id="psc-YQ-3qZ"/>
                         <outlet property="loada" destination="ZDI-SM-lsG" id="9Tb-Xe-PMB"/>
                         <outlet property="myTable" destination="QBd-F0-ljl" id="1aw-Tk-dJi"/>
@@ -1492,6 +1512,9 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <connections>
+                        <outlet property="lbTitulo" destination="QYC-IZ-fbm" id="dej-wm-O0R"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BUJ-c5-EzK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

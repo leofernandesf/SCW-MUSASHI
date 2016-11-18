@@ -128,6 +128,44 @@ class Helper {
         
     }
     
+    
+    static func separaString(json : [[String : Any]], completion:  @escaping (_ results: [[String]]) -> Void) {
+        var value = [[String]]()
+        var count = 0
+        for data in json {
+            let field = data["field"] as! String
+            
+            if field == "lang_selection" || field == "ttl_choose_language" || field == "ttl_menu_logout" || field == "btn_reject" || field == "btn_comment" || field == "btn_accept" || field == "btn_done" || field == "btn_finish" || field == "btn_close" || field == "ttl_sector" || field == "ttl_date_time" || field == "ttl_operator" || field == "btn_confirm" || field == "txt_question_route_call" || field == "btn_yes" || field == "btn_no" || field == "ttl_menu_about" || field == "ttl_menu_language" || field == "ttl_issue" || field == "ttl_queries" || field == "ttl_foward" {
+                if let values = data["value"] as? [String] {
+                    print("\(count) - \(values)")
+                    value.append(values)
+                    count += 1
+                }
+            }
+            
+            //print(value)
+            
+//            if let query = y["field"] as? String {
+//                if query == "lang_selection" {
+//                    if let value = y["value"]as? [String] {
+//                        print(value)
+//                        DispatchQueue.main.async {
+//                            self.loada.stopAnimating()
+//                            self.load.isHidden = true
+//                            self.lbLanguage1.text = value[0]
+//                            self.lbLanguage2.text = value[1]
+//                        }
+//                        
+//                    }
+//                } else {
+//                    
+//                }
+//            }
+        }
+        
+        completion(value)
+    }
+    
 }
 
 extension UIColor {

@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="16A323" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Linguagem" representedClassName="Linguagem" syncable="YES" codeGenerationType="class">
+        <attribute name="aceitar" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="close" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="comentar" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="confirmar" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="done" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="encaminhar" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="exit" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="finish" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="issue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nao" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="operador" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="popUp" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="queries" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="reject" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sector" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sim" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sobre" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ttlLanguage" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Linguagem" positionX="-63" positionY="-18" width="128" height="30"/>
+    </elements>
 </model>

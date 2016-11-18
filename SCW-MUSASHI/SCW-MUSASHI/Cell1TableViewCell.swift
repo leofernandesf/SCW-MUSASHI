@@ -13,6 +13,16 @@ class Cell1TableViewCell: UITableViewCell {
     @IBOutlet weak var lbLinha: UILabel!
     @IBOutlet weak var lbOperador: UILabel!
     @IBOutlet weak var ldData: UILabel!
+    
+    
+    @IBOutlet weak var sector: UILabel!
+    
+    @IBOutlet weak var operador: UILabel!
+    @IBOutlet weak var dataHora: UILabel!
+    
+    
+    
+    
     var informacoes: [String: Any]? {
         didSet {
             if let operador = informacoes?["employee_name"] as? String {
@@ -37,6 +47,10 @@ class Cell1TableViewCell: UITableViewCell {
                 
                 ldData.text = somedateString
             }
+            
+            sector.text = DAO.LinguagemSalvas(str: "sector")
+            operador.text = DAO.LinguagemSalvas(str: "operador")
+            dataHora.text = DAO.LinguagemSalvas(str: "date")
         }
     }
     override func awakeFromNib() {

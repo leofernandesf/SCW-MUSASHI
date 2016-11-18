@@ -30,14 +30,15 @@ class LoginViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         Layout.tfLayout(tfs: [tfEmail,tfSenha])
-        
-        
-        let verificador = defaults.object(forKey: "logado") as! Int
-        
-        if verificador == 1 {
-            let vc = self.storyboard!.instantiateViewController(withIdentifier: "home") as!HomeViewController
-            self.navigationController?.pushViewController(vc, animated: false)
+
+        if let verificador = defaults.object(forKey: "logado") as? Int {
+            if verificador == 1 {
+                let vc = self.storyboard!.instantiateViewController(withIdentifier: "home") as!HomeViewController
+                self.navigationController?.pushViewController(vc, animated: false)
+            }
         }
+        
+        
         
     }
     
@@ -79,7 +80,6 @@ class LoginViewController: UIViewController {
             self.defaults.set(job_tittle, forKey: "jobTitle")
             salvarUser(user: userData)
             DispatchQueue.main.async {
-                self.defaults.set(1, forKey: "logado")
                 self.lAnimation.stopAnimating()
                 self.load.isHidden = true
                 let vc = self.storyboard!.instantiateViewController(withIdentifier: "chooseLanguage") as! ChooseLanguageViewController

@@ -14,13 +14,17 @@ class ChooseLanguageViewController: UIViewController {
     @IBOutlet weak var load: UIView!
     @IBOutlet weak var lbLanguage2: UILabel!
     @IBOutlet weak var lbLanguage1: UILabel!
+    @IBOutlet weak var lbChoose1: UILabel!
+    @IBOutlet weak var lbChoose2: UILabel!
+    
     @IBOutlet weak var bt1: UIButton!
     @IBOutlet weak var bt2: UIButton!
     var verificador = false
     let checkOff = Layout.sizeImage(width: 30, height: 30, image: #imageLiteral(resourceName: "check_off"))
     let checkOn = Layout.sizeImage(width: 30, height: 30, image: #imageLiteral(resourceName: "check_on"))
-    var selectedButton = 2
-    
+    var selectedButton = 1
+    var linguagens = [[String]]()
+    let defaults = UserDefaults.standard
     override func viewDidLoad() {
         super.viewDidLoad()
         loada.startAnimating()
@@ -29,6 +33,8 @@ class ChooseLanguageViewController: UIViewController {
         Helper.GET(urlString: "http://191.168.20.202/scw/ws_config/get_labels") { (jsonRecebe) in
             self.separa(json: jsonRecebe)
         }
+        
+        
         // Do any additional setup after loading the view.
     }
     
@@ -44,24 +50,39 @@ class ChooseLanguageViewController: UIViewController {
     func separa(json: Dictionary<String, AnyObject>) {
         let x = json["data"] as! [[String: Any]]
         print(x.count)
-        for y in x {
-            if let query = y["field"] as? String {
-                if query == "lang_selection" {
-                    if let value = y["value"]as? [String] {
-                        print(value)
-                        DispatchQueue.main.async {
-                            self.loada.stopAnimating()
-                            self.load.isHidden = true
-                            self.lbLanguage1.text = value[0]
-                            self.lbLanguage2.text = value[1]
-                        }
-                        
-                    }
-                } else {
-                    
-                }
+        
+        Helper.separaString(json: x) { (values) in
+            DispatchQueue.main.async {
+                
+                self.linguagens = values
+                self.lbLanguage1.text = self.linguagens[10][0]
+                self.lbLanguage2.text = self.linguagens[10][1]
+                self.lbChoose1.text = self.linguagens[14][0]
+                self.lbChoose2.text = self.linguagens[14][1]
+                self.loada.stopAnimating()
+                self.load.isHidden = true
             }
         }
+        
+        
+//        for y in x {
+//            if let query = y["field"] as? String {
+//                if query == "lang_selection" {
+//                    if let value = y["value"]as? [String] {
+//                        print(value)
+//                        DispatchQueue.main.async {
+//                            self.loada.stopAnimating()
+//                            self.load.isHidden = true
+//                            self.lbLanguage1.text = value[0]
+//                            self.lbLanguage2.text = value[1]
+//                        }
+//                        
+//                    }
+//                } else {
+//                    
+//                }
+//            }
+//        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -70,24 +91,29 @@ class ChooseLanguageViewController: UIViewController {
     }
     
     @IBAction func acao1(_ sender: AnyObject) {
-        selectedButton = 1
+        selectedButton = 0
         mudarBotao(bt1: bt1, bt2: bt2)
         
     }
     
     @IBAction func entrar(_ sender: AnyObject) {
-        print(navigationController?.viewControllers.count)
-        if (navigationController?.viewControllers[1].isKind(of: HomeViewController.self))! {
-            _ = self.navigationController?.popViewController(animated: true)
-        } else {
-            let vc = self.storyboard!.instantiateViewController(withIdentifier: "home") as! HomeViewController
-            self.navigationController?.pushViewController(vc, animated: false)
+        print(selectedButton)
+        DAO.selectedLanguage(language: linguagens, i: selectedButton)
+        DispatchQueue.main.async {
+            if (self.navigationController?.viewControllers[1].isKind(of: HomeViewController.self))! {
+                _ = self.navigationController?.popViewController(animated: true)
+            } else {
+                self.defaults.set(1, forKey: "logado")
+                let vc = self.storyboard!.instantiateViewController(withIdentifier: "home") as! HomeViewController
+                self.navigationController?.pushViewController(vc, animated: false)
+            }
         }
+        
         
     }
     @IBAction func acao2(_ sender: AnyObject) {
         
-        selectedButton = 2
+        selectedButton = 1
         mudarBotao(bt1: bt2, bt2: bt1)
     }
     

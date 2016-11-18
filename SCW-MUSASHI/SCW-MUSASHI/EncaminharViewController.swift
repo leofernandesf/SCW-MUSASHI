@@ -10,6 +10,7 @@ import UIKit
 
 class EncaminharViewController: UIViewController {
     
+    @IBOutlet weak var lbTitulo: UILabel!
     @IBOutlet weak var loada: UIActivityIndicatorView!
     @IBOutlet weak var load: UIView!
     @IBOutlet weak var myTable: UITableView!
@@ -21,6 +22,7 @@ class EncaminharViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        lbTitulo.text = DAO.LinguagemSalvas(str: "encaminhar")
         myTable.tableFooterView = UIView(frame: .zero)
         self.loada.startAnimating()
         pegarInformacaio()

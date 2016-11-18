@@ -10,12 +10,12 @@ import UIKit
 
 class atribuirTableViewCell: UITableViewCell {
     
+    
     @IBOutlet weak var ivCheck: UIImageView!
     @IBOutlet weak var lbNome: UILabel!
     @IBOutlet weak var lbCargo: UILabel!
     @IBOutlet weak var lbNumero: UILabel!
-    
-    var assigned: Int?
+    var assigned: Bool?
     var user : [String : Any]? {
         didSet {
             
@@ -31,16 +31,20 @@ class atribuirTableViewCell: UITableViewCell {
                 self.lbCargo.text = cargo
             }
             
-            if let assigned = user?["assigned"] as? Int {
+            if let assigned = user?["assigned"] as? Bool {
                 self.assigned = assigned
-                if assigned == 1 {
+                if assigned == true {
                     ivCheck.image = #imageLiteral(resourceName: "icon_checkbox_select")
-                    
                 } else {
                     ivCheck.image = #imageLiteral(resourceName: "icon_checkbox")
-                    lbNumero.isHidden = true
                 }
-                lbNumero.text = "\(assigned)"
+            }
+            
+            if let count = user?["count"] as? Int {
+                print(count)
+                lbNumero.text = "\(count)"
+            } else {
+                self.lbNumero.isHidden = true
             }
         }
     }

@@ -30,6 +30,7 @@
 		A7D0143F1DDA789D004741D3 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D0143E1DDA789D004741D3 /* HomeTableViewCell.swift */; };
 		A7D014411DDA78AD004741D3 /* MyCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D014401DDA78AD004741D3 /* MyCellCollectionViewCell.swift */; };
 		A7D014431DDA78BF004741D3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D014421DDA78BF004741D3 /* HomeViewController.swift */; };
+		B3A0A3B81DDF43D6003BEB70 /* DAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A0A3B71DDF43D6003BEB70 /* DAO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		A7D0143E1DDA789D004741D3 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		A7D014401DDA78AD004741D3 /* MyCellCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCellCollectionViewCell.swift; sourceTree = "<group>"; };
 		A7D014421DDA78BF004741D3 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		B3A0A3B71DDF43D6003BEB70 /* DAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 		A7D014191DDA7446004741D3 /* SCW-MUSASHI */ = {
 			isa = PBXGroup;
 			children = (
+				B3A0A3B11DDF4099003BEB70 /* Core */,
 				A7D014391DDA783D004741D3 /* Login */,
 				A7D014381DDA7831004741D3 /* EscolherLinguagem */,
 				A7D014371DDA7828004741D3 /* Helpers */,
@@ -102,7 +105,6 @@
 				A7D014241DDA7446004741D3 /* Assets.xcassets */,
 				A7D014261DDA7446004741D3 /* LaunchScreen.storyboard */,
 				A7D014291DDA7446004741D3 /* Info.plist */,
-				A7D014211DDA7446004741D3 /* SCW_MUSASHI.xcdatamodeld */,
 				A706EBBA1DDBD153001E97A2 /* SobreViewController.swift */,
 				A706EBBC1DDBD161001E97A2 /* ComentarViewController.swift */,
 				A706EBBE1DDBD16E001E97A2 /* PopUpViewController.swift */,
@@ -172,6 +174,15 @@
 				A7D0142F1DDA771D004741D3 /* LoginViewController.swift */,
 			);
 			name = Login;
+			sourceTree = "<group>";
+		};
+		B3A0A3B11DDF4099003BEB70 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				A7D014211DDA7446004741D3 /* SCW_MUSASHI.xcdatamodeld */,
+				B3A0A3B71DDF43D6003BEB70 /* DAO.swift */,
+			);
+			name = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,6 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3A0A3B81DDF43D6003BEB70 /* DAO.swift in Sources */,
 				A706EBAD1DDBD096001E97A2 /* Cell1TableViewCell.swift in Sources */,
 				A7D014301DDA771D004741D3 /* LoginViewController.swift in Sources */,
 				A706EBB31DDBD0EB001E97A2 /* EncaminharViewController.swift in Sources */,

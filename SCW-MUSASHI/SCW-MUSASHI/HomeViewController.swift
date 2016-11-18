@@ -28,6 +28,9 @@ class HomeViewController: UIViewController {
     var cont = 2
     var index = IndexPath(item: 0, section: 0)
     let titulos = ["Consultas", "Chamados", "Aprovados"]
+    var titulosCore = [String]()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let image = Layout.sizeImage(width: 20, height: 20, image: #imageLiteral(resourceName: "ic_search"))
@@ -38,6 +41,9 @@ class HomeViewController: UIViewController {
         }
         self.myTable.tableFooterView = UIView(frame: .zero)
         tfSearch.delegate = self
+        titulosCore.append(DAO.LinguagemSalvas(str: "queries"))
+        titulosCore.append(DAO.LinguagemSalvas(str: "issue"))
+        titulosCore.append("Aproved")
         // Do any additional setup after loading the view.
     }
     
@@ -113,20 +119,24 @@ class HomeViewController: UIViewController {
     func menuOpcoes() {
         let alert: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let idioma =  UIAlertAction(title: "Idioma", style: .default) { UIAlertAction in
+        let idioma =  UIAlertAction(title: DAO.LinguagemSalvas(str: "ttlLanguage"), style: .default) { UIAlertAction in
             let vc = self.storyboard!.instantiateViewController(withIdentifier: "chooseLanguage") as! ChooseLanguageViewController
             self.navigationController?.pushViewController(vc, animated: true)
             
         }
         
-        let sobre =  UIAlertAction(title: "Sobre", style: .default) { UIAlertAction in
+        let sobre =  UIAlertAction(title: DAO.LinguagemSalvas(str: "sobre"), style: .default) { UIAlertAction in
             let vc = self.storyboard!.instantiateViewController(withIdentifier: "sobre") as! SobreViewController
             self.navigationController?.pushViewController(vc, animated: true)
         }
         
-        let logOut =  UIAlertAction(title: "Logout", style: .default) { UIAlertAction in
+        let logOut =  UIAlertAction(title: DAO.LinguagemSalvas(str: "exit"), style: .default) { UIAlertAction in
             self.defaults.set(0, forKey: "logado")
-            _ = self.navigationController?.popToRootViewController(animated: false)
+            DAO.excluir()
+            DispatchQueue.main.async {
+                _ = self.navigationController?.popToRootViewController(animated: false)
+            }
+            
         }
         
         
@@ -207,7 +217,7 @@ extension HomeViewController : UITextFieldDelegate {
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MyCellCollectionViewCell
-        cell.lbTitle.text = titulos[indexPath.item]
+        cell.lbTitle.text = titulosCore[indexPath.item]
         return cell
     }
     
