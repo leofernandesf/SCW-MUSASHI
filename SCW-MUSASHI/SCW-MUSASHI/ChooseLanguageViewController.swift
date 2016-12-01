@@ -100,6 +100,7 @@ class ChooseLanguageViewController: UIViewController {
         print(selectedButton)
         DAO.selectedLanguage(language: linguagens, i: selectedButton)
         DispatchQueue.main.async {
+            self.defaults.set(self.selectedButton, forKey: "label")
             if (self.navigationController?.viewControllers[1].isKind(of: HomeViewController.self))! {
                 _ = self.navigationController?.popViewController(animated: true)
             } else {

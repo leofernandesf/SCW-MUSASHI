@@ -10,9 +10,11 @@ import UIKit
 
 class DetalhesViewController: UIViewController {
     
+    @IBOutlet weak var load: UIView!
     @IBOutlet weak var btShare: UIButton!
     @IBOutlet weak var lbUsiario: UILabel!
     @IBOutlet weak var myTable: UITableView!
+    @IBOutlet weak var loader: UIActivityIndicatorView!
     
     @IBOutlet weak var btComentar: UIButton!
     @IBOutlet weak var btAceitar: UIButton!
@@ -92,6 +94,8 @@ class DetalhesViewController: UIViewController {
     }
     
     @IBAction func rejeitar(_ sender: Any) {
+        self.load.isHidden = false
+        self.loader.startAnimating()
         let contMenu = userDefault.object(forKey: "contMenu") as! Int
         var status = Int()
         if contMenu == 2 {
@@ -99,10 +103,14 @@ class DetalhesViewController: UIViewController {
         } else {
             status = 5
         }
+        
+        
         post(status: status)
     }
     
     @IBAction func done(_ sender: Any) {
+        self.load.isHidden = false
+        self.loader.startAnimating()
         let contMenu = userDefault.object(forKey: "contMenu") as! Int
         var status = Int()
         if contMenu == 2 {
@@ -123,6 +131,8 @@ class DetalhesViewController: UIViewController {
                 if let success = result["success"] as? Bool {
                     if success {
                         DispatchQueue.main.async {
+                            self.load.isHidden = true
+                            self.loader.stopAnimating()
                             _ = self.navigationController?.popViewController(animated: true)
                         }
                     }

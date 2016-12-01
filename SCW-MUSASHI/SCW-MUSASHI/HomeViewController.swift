@@ -33,6 +33,8 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        load.isHidden = false
+        loada.startAnimating()
         let image = Layout.sizeImage(width: 20, height: 20, image: #imageLiteral(resourceName: "ic_search"))
         ptSearch.setImage(image, for: .normal)
         if let contMenu = defaults.object(forKey: "contMenu") as? Int {
@@ -49,8 +51,8 @@ class HomeViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        load.isHidden = false
-        loada.startAnimating()
+        
+        
         Helper.GET(urlString: "http://191.168.20.202/scw/ws_issue/show") { (recebeJson) in
 
             print(recebeJson)
@@ -61,9 +63,16 @@ class HomeViewController: UIViewController {
         
         myCollection.dataSource = self
         myCollection.delegate = self
+        DispatchQueue.main.async {
+            self.titulosCore = [String]()
+            self.titulosCore.append(DAO.LinguagemSalvas(str: "queries"))
+            self.titulosCore.append(DAO.LinguagemSalvas(str: "issue"))
+            self.titulosCore.append("Aproved")
+            self.myCollection.reloadData()
+            self.myCollection.selectItem(at: self.index, animated: true, scrollPosition: .left)
+        }
         
         
-        myCollection.selectItem(at: index, animated: true, scrollPosition: .left)
     }
     
     override func viewWillAppear(_ animated: Bool) {
