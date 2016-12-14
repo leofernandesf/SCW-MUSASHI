@@ -98,8 +98,12 @@ class Helper {
                 print("response = \(response)")
                 
             }else {
+                
+//                let responseString = String(data: data, encoding: .utf8)
+//                print(responseString!)
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: []) as! Dictionary<String, AnyObject>
+                    print(json)
                     //                    let x = json["data"] as! [[String: Any]]
                     //                    for y in x {
                     //                        if let query = y["query"] as? Int {

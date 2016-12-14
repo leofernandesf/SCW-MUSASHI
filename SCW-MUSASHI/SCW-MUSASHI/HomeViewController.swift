@@ -52,8 +52,8 @@ class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        
-        Helper.GET(urlString: "http://191.168.20.202/scw/ws_issue/show") { (recebeJson) in
+        let ip = defaults.object(forKey: "IP") as! String
+        Helper.GET(urlString: "\(ip)/scw/ws_issue/show") { (recebeJson) in
 
             print(recebeJson)
             self.separaChamadas(json: recebeJson)

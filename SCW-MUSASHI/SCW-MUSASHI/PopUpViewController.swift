@@ -21,6 +21,8 @@ class PopUpViewController: UIViewController {
     @IBOutlet weak var btSim: UIButton!
     
     @IBOutlet weak var myView: UIView!
+    
+    let userDefault = UserDefaults.standard
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,7 +61,8 @@ class PopUpViewController: UIViewController {
         if let CATEGORY = idCategory {
             category = CATEGORY
         }
-        let url = "http://191.168.20.202/scw/ws_issue/change_category/\(id)/\(category)"
+        let ip = userDefault.object(forKey: "IP") as! String
+        let url = "\(ip)/scw/ws_issue/change_category/\(id)/\(category)"
         print(url)
         Helper.GET(urlString: url) { (result) in
             print(result)

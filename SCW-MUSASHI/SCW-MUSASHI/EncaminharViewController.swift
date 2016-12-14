@@ -19,6 +19,7 @@ class EncaminharViewController: UIViewController {
     var results: [String : Any]?
     var color = UIColor()
     var id: Int?
+    let userDefault = UserDefaults.standard
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,7 +32,8 @@ class EncaminharViewController: UIViewController {
     
     func pegarInformacaio() {
         if results == nil {
-            Helper.GET(urlString: "http://191.168.20.202/scw/ws_toten/get_issues_categories") { (result) in
+            let ip = userDefault.object(forKey: "IP") as! String
+            Helper.GET(urlString: "\(ip)/scw/ws_toten/get_issues_categories") { (result) in
                 self.results = result
                 self.mostrarNodes(pais: self.results!)
             }

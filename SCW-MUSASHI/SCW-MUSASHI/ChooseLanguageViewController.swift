@@ -30,7 +30,9 @@ class ChooseLanguageViewController: UIViewController {
         loada.startAnimating()
         bt1.setImage(checkOff, for: .normal)
         bt2.setImage(checkOn, for: .normal)
-        Helper.GET(urlString: "http://191.168.20.202/scw/ws_config/get_labels") { (jsonRecebe) in
+        
+        let ip = defaults.object(forKey: "IP") as! String
+        Helper.GET(urlString: "\(ip)/scw/ws_config/get_labels") { (jsonRecebe) in
             self.separa(json: jsonRecebe)
         }
         

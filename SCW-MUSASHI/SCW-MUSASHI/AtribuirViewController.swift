@@ -19,13 +19,15 @@ class AtribuirViewController: UIViewController {
     var id: Int?
     var ids = [Any]()
     var users: [[String : Any]]?
+    let userDefault = UserDefaults.standard
     override func viewDidLoad() {
         super.viewDidLoad()
         myTable.tableFooterView = UIView(frame: .zero)
         loada.startAnimating()
         print(id)
         if let idIssue = id {
-            Helper.GET(urlString: "http://191.168.20.202/scw/ws_issue/get_assigned_users/\(idIssue)") { (result) in
+            let ip = userDefault.object(forKey: "IP") as! String
+            Helper.GET(urlString: "\(ip)/scw/ws_issue/get_assigned_users/\(idIssue)") { (result) in
                 self.pegarUser(json: result)
             }
         }
@@ -91,7 +93,8 @@ class AtribuirViewController: UIViewController {
         print(parameters)
         if let idIssue = id {
             print(idIssue)
-            Helper.POST(urlString: "http://191.168.20.202/scw/ws_issue/set_assigned_users/\(idIssue)", postString: parameters, completion: { (result) in
+            let ip = userDefault.object(forKey: "IP") as! String
+            Helper.POST(urlString: "\(ip)/scw/ws_issue/set_assigned_users/\(idIssue)", postString: parameters, completion: { (result) in
                 print(result)
             })
             _ = self.navigationController?.popViewController(animated: true)

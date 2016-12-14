@@ -13,11 +13,14 @@ class Cell3TableViewCell: UITableViewCell {
     @IBOutlet weak var load: UIView!
     @IBOutlet weak var loada: UIActivityIndicatorView!
     
+    let userDefault = UserDefaults.standard
+    
     var id: Int? {
         didSet {
             self.load.isHidden = false
             self.loada.startAnimating()
-            let url = "http://191.168.20.202/scw/ws_mobile/get_comments/\(id!)"
+            let ip = userDefault.object(forKey: "IP") as! String
+            let url = "\(ip)/scw/ws_mobile/get_comments/\(id!)"
             print(url)
             Helper.GET(urlString: url) { (result) in
                 

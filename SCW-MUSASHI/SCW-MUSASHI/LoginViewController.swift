@@ -10,6 +10,7 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    @IBOutlet weak var recocnizerView: UIView!
     @IBOutlet weak var lAnimation: UIActivityIndicatorView!
     @IBOutlet weak var load: UIView!
     @IBOutlet weak var tfEmail: UITextField!
@@ -19,6 +20,11 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
+        
+        let tresDedos = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.gestureTres))
+        tresDedos.numberOfTapsRequired = 1
+        tresDedos.numberOfTouchesRequired = 3
+        self.recocnizerView.addGestureRecognizer(tresDedos)
         // Do any additional setup after loading the view.
     }
     
@@ -27,10 +33,17 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func gestureTres() {
+        let vc = self.storyboard!.instantiateViewController(withIdentifier: "DefinirIP") as! DefinirIpViewController
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+        print("val")
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         Layout.tfLayout(tfs: [tfEmail,tfSenha])
-
+        print(defaults.object(forKey: "IP"))
         if let verificador = defaults.object(forKey: "logado") as? Int {
             if verificador == 1 {
                 let vc = self.storyboard!.instantiateViewController(withIdentifier: "home") as!HomeViewController
@@ -43,24 +56,30 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func Entrar(_ sender: AnyObject) {
-        self.load.isHidden = false
-        self.lAnimation.startAnimating()
-        let url = "http://191.168.20.202/scw/ws_mobile/login/"
-        //let postString = "{\"success\":\"true\", \"data\":{\"user\":\"\(tfEmail.text!)\", \"pass\":\"\(tfSenha.text!)\"}}"
-        
-        let parameters: [String: Any] = [
-            "success" : true,
-            "data": [
-                "user" : tfEmail.text!,
-                "pass": tfSenha.text!
+        if let ip = defaults.object(forKey: "IP") as? String {
+            print(ip)
+            self.load.isHidden = false
+            self.lAnimation.startAnimating()
+            let url = "\(ip)/scw/ws_mobile/login/"
+            //let postString = "{\"success\":\"true\", \"data\":{\"user\":\"\(tfEmail.text!)\", \"pass\":\"\(tfSenha.text!)\"}}"
+            
+            let parameters: [String: Any] = [
+                "success" : true,
+                "data": [
+                    "user" : tfEmail.text!,
+                    "pass": tfSenha.text!
+                ]
+                
             ]
-            
-        ]
-        Helper.POST(urlString: url, postString: parameters) { (success) in
-            print(success)
-            self.verificar(strings: success)
-            
+            Helper.POST(urlString: url, postString: parameters) { (success) in
+                print(success)
+                self.verificar(strings: success)
+                
+            }
+        } else {
+            showMensage(titulo: "IP nao setado.", mensagem: "Por Favor, sete um valor para o IP.")
         }
+        
     }
     
     func verificar(strings: [String: Any]) {
@@ -80,12 +99,21 @@ class LoginViewController: UIViewController {
             self.defaults.set(job_tittle, forKey: "jobTitle")
             salvarUser(user: userData)
             DispatchQueue.main.async {
+                self.tfEmail.text = ""
+                self.tfSenha.text = ""
                 self.lAnimation.stopAnimating()
                 self.load.isHidden = true
                 let vc = self.storyboard!.instantiateViewController(withIdentifier: "chooseLanguage") as! ChooseLanguageViewController
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             //print(userData)
+        } else {
+            DispatchQueue.main.async {
+                self.lAnimation.stopAnimating()
+                self.load.isHidden = true
+                self.showMensage(titulo: "Usuario invalido.", mensagem: "informe um usuario valido.")
+            }
+            
         }
     }
     
@@ -103,7 +131,17 @@ class LoginViewController: UIViewController {
         }
      }
     
-    
+    func showMensage(titulo: String, mensagem: String) {
+        let alertController = UIAlertController(title: titulo, message: mensagem, preferredStyle: .alert)
+        
+        let buttonCancel = UIAlertAction(title: "OK", style: .cancel) { (action) -> Void in
+            print("Cancel Button Pressed")
+        }
+        
+        alertController.addAction(buttonCancel)
+        
+        present(alertController, animated: true, completion: nil)
+    }
     /*
      // MARK: - Navigation
      
