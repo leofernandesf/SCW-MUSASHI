@@ -20,6 +20,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
+        defaults.set("http://200.242.53.136", forKey: "IP")
         
         let tresDedos = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.gestureTres))
         tresDedos.numberOfTapsRequired = 1

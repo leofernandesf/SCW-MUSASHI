@@ -21,7 +21,7 @@ class DefinirIpViewController: UIViewController {
         if let ip = userDefault.object(forKey: "IP") as? String {
             tfIP.text = ip
         } else {
-            tfIP.text = "191.168.22.251"
+            tfIP.text = "200.242.53.136"
         }
         // Do any additional setup after loading the view.
     }
