@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="16B2555" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16C67" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Linguagem" representedClassName="Linguagem" syncable="YES" codeGenerationType="class">
         <attribute name="aceitar" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="aprovado" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="close" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="comentar" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="confirmar" optional="YES" attributeType="String" syncable="YES"/>
@@ -22,6 +23,6 @@
         <attribute name="ttlLanguage" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Linguagem" positionX="-63" positionY="-18" width="128" height="30"/>
+        <element name="Linguagem" positionX="-63" positionY="-18" width="128" height="345"/>
     </elements>
 </model>

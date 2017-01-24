@@ -12,10 +12,11 @@ import CoreData
 class DAO: NSObject {
     
     static func saveLanguage(linguagemEscolhida: [String]) {
-        let keys = ["aceitar", "close", "comentar", "confirmar", "date", "done", "encaminhar", "exit", "finish", "issue", "nao", "operador", "popUp", "queries", "reject", "sector", "sim", "sobre", "ttlLanguage"]
+        let keys = ["aceitar", "close", "comentar", "confirmar", "date", "done", "encaminhar", "exit", "finish", "issue", "nao", "operador", "popUp", "queries", "reject", "sector", "sim", "sobre", "ttlLanguage", "aprovado"]
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         let newLanguage = NSEntityDescription.insertNewObject(forEntityName: "Linguagem", into: context)
+        
         
         for i in 0..<linguagemEscolhida.count {
             newLanguage.setValue(linguagemEscolhida[i], forKey: keys[i])
@@ -36,25 +37,27 @@ class DAO: NSObject {
     
     static func selectedLanguage(language: [[String]], i: Int) {
         var palavras = [String]()
-        palavras.append(language[6][i])
-        palavras.append(language[12][i])
-        palavras.append(language[11][i])
-        palavras.append(language[3][i])
+        
         palavras.append(language[0][i])
-        palavras.append(language[13][i])
-        palavras.append(language[37][i])
-        palavras.append(language[36][i])
-        palavras.append(language[9][i])
+        palavras.append(language[1][i])
         palavras.append(language[2][i])
+        palavras.append(language[3][i])
+        palavras.append(language[12][i])
         palavras.append(language[4][i])
+        palavras.append(language[13][i])
+        palavras.append(language[17][i])
+        palavras.append(language[5][i])
+        palavras.append(language[14][i])
+        palavras.append(language[6][i])
+        palavras.append(language[18][i])
+        palavras.append(language[21][i])
+        palavras.append(language[19][i])
+        palavras.append(language[7][i])
+        palavras.append(language[20][i])
+        palavras.append(language[8][i])
         palavras.append(language[15][i])
         palavras.append(language[16][i])
-        palavras.append(language[7][i])
-        palavras.append(language[8][i])
-        palavras.append(language[1][i])
-        palavras.append(language[5][i])
-        palavras.append(language[35][i])
-        palavras.append(language[34][i])
+        palavras.append(language[10][i])
         print(palavras)
         DAO.saveLanguage(linguagemEscolhida: palavras)
     }

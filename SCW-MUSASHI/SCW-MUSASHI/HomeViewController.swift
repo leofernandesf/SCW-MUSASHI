@@ -45,7 +45,7 @@ class HomeViewController: UIViewController {
         tfSearch.delegate = self
         titulosCore.append(DAO.LinguagemSalvas(str: "queries"))
         titulosCore.append(DAO.LinguagemSalvas(str: "issue"))
-        titulosCore.append("Aproved")
+        titulosCore.append(DAO.LinguagemSalvas(str: "aprovado"))
         // Do any additional setup after loading the view.
     }
     
@@ -67,7 +67,7 @@ class HomeViewController: UIViewController {
             self.titulosCore = [String]()
             self.titulosCore.append(DAO.LinguagemSalvas(str: "queries"))
             self.titulosCore.append(DAO.LinguagemSalvas(str: "issue"))
-            self.titulosCore.append("Aproved")
+            self.titulosCore.append(DAO.LinguagemSalvas(str: "aprovado"))
             self.myCollection.reloadData()
             self.myCollection.selectItem(at: self.index, animated: true, scrollPosition: .left)
         }

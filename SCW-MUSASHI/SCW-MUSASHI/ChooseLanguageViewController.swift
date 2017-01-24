@@ -57,10 +57,10 @@ class ChooseLanguageViewController: UIViewController {
             DispatchQueue.main.async {
                 
                 self.linguagens = values
-                self.lbLanguage1.text = self.linguagens[10][0]
-                self.lbLanguage2.text = self.linguagens[10][1]
-                self.lbChoose1.text = self.linguagens[14][0]
-                self.lbChoose2.text = self.linguagens[14][1]
+                self.lbLanguage1.text = self.linguagens[9][0]
+                self.lbLanguage2.text = self.linguagens[9][1]
+                self.lbChoose1.text = self.linguagens[11][0]
+                self.lbChoose2.text = self.linguagens[11][1]
                 self.loada.stopAnimating()
                 self.load.isHidden = true
             }
