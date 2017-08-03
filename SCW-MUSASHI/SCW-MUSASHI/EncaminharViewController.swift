@@ -32,11 +32,10 @@ class EncaminharViewController: UIViewController {
     
     func pegarInformacaio() {
         if results == nil {
-            let ip = userDefault.object(forKey: "IP") as! String
-            Helper.GET(urlString: "\(ip)/scw/ws_toten/get_issues_categories") { (result) in
+            MusashiService.GET(urlType: .categories, completion: { (result) in
                 self.results = result
                 self.mostrarNodes(pais: self.results!)
-            }
+            })
         } else {
             self.mostrarNodes(pais: self.results!)
         }

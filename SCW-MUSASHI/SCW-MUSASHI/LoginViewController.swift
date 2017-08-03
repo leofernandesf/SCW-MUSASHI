@@ -61,7 +61,7 @@ class LoginViewController: UIViewController {
             print(ip)
             self.load.isHidden = false
             self.lAnimation.startAnimating()
-            let url = "\(ip)/scw/ws_mobile/login/"
+            
             //let postString = "{\"success\":\"true\", \"data\":{\"user\":\"\(tfEmail.text!)\", \"pass\":\"\(tfSenha.text!)\"}}"
             
             let parameters: [String: Any] = [
@@ -72,11 +72,10 @@ class LoginViewController: UIViewController {
                 ]
                 
             ]
-            Helper.POST(urlString: url, postString: parameters) { (success) in
+            MusashiService.POST(urlType: .login, postString: parameters, completion: { (success) in
                 print(success)
                 self.verificar(strings: success)
-                
-            }
+            })
         } else {
             showMensage(titulo: "IP nao setado.", mensagem: "Por Favor, sete um valor para o IP.")
         }

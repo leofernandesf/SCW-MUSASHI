@@ -26,10 +26,9 @@ class AtribuirViewController: UIViewController {
         loada.startAnimating()
         print(id)
         if let idIssue = id {
-            let ip = userDefault.object(forKey: "IP") as! String
-            Helper.GET(urlString: "\(ip)/scw/ws_issue/get_assigned_users/\(idIssue)") { (result) in
+            MusashiService.GET(urlType: .assignedUser, id: idIssue.description, completion: { (result) in
                 self.pegarUser(json: result)
-            }
+            })
         }
         
         btConfirmar.setTitle(DAO.LinguagemSalvas(str: "confirmar"), for: .normal)
@@ -93,10 +92,10 @@ class AtribuirViewController: UIViewController {
         print(parameters)
         if let idIssue = id {
             print(idIssue)
-            let ip = userDefault.object(forKey: "IP") as! String
-            Helper.POST(urlString: "\(ip)/scw/ws_issue/set_assigned_users/\(idIssue)", postString: parameters, completion: { (result) in
+            MusashiService.POST(urlType: .setAssignedUser, postString: parameters, id: idIssue.description, completion: { (result) in
                 print(result)
             })
+            
             _ = self.navigationController?.popViewController(animated: true)
         }
         

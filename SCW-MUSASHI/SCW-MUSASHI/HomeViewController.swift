@@ -52,12 +52,9 @@ class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let ip = defaults.object(forKey: "IP") as! String
-        Helper.GET(urlString: "\(ip)/scw/ws_issue/show") { (recebeJson) in
-
+        MusashiService.GET(urlType: .home) { (recebeJson) in
             print(recebeJson)
             self.separaChamadas(json: recebeJson)
-            
         }
         
         

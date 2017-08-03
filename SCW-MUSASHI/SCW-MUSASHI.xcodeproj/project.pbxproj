@@ -32,6 +32,7 @@
 		A7D014431DDA78BF004741D3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D014421DDA78BF004741D3 /* HomeViewController.swift */; };
 		B386C4C91E018A5F009A8B80 /* DefinirIpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B386C4C81E018A5F009A8B80 /* DefinirIpViewController.swift */; };
 		B3A0A3B81DDF43D6003BEB70 /* DAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A0A3B71DDF43D6003BEB70 /* DAO.swift */; };
+		B3DD72091F2BBBE40012216E /* MusashiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DD72081F2BBBE40012216E /* MusashiService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		A7D014421DDA78BF004741D3 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B386C4C81E018A5F009A8B80 /* DefinirIpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefinirIpViewController.swift; sourceTree = "<group>"; };
 		B3A0A3B71DDF43D6003BEB70 /* DAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAO.swift; sourceTree = "<group>"; };
+		B3DD72081F2BBBE40012216E /* MusashiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusashiService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				A706EBBC1DDBD161001E97A2 /* ComentarViewController.swift */,
 				A706EBBE1DDBD16E001E97A2 /* PopUpViewController.swift */,
 				B386C4C81E018A5F009A8B80 /* DefinirIpViewController.swift */,
+				B3DD72081F2BBBE40012216E /* MusashiService.swift */,
 			);
 			path = "SCW-MUSASHI";
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 				A7D014411DDA78AD004741D3 /* MyCellCollectionViewCell.swift in Sources */,
 				A706EBBD1DDBD161001E97A2 /* ComentarViewController.swift in Sources */,
 				A706EBAB1DDBD085001E97A2 /* DetalhesViewController.swift in Sources */,
+				B3DD72091F2BBBE40012216E /* MusashiService.swift in Sources */,
 				A7D0143D1DDA7882004741D3 /* Helper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

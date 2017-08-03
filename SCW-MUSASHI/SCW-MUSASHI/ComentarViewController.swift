@@ -70,8 +70,8 @@ class ComentarViewController: UIViewController {
             let ip = defaults.object(forKey: "IP") as! String
             let url = "\(ip)/scw/ws_issue/new_comment/\(id)"
             print(url)
-            //let postString = "{\"success\":\"true\", \"data\":{\"user\":\"\(user)\", \"comment\":\"\(tvComentario.text!)\"}}"
-            Helper.POST(urlString: url, postString: parameters, completion: { (sucess) in
+  
+            MusashiService.POST(urlType: .newComment, postString: parameters, id: id.description, completion: { (sucess) in
                 if let verificador = sucess["success"] as? Bool {
                     if verificador == true {
                         DispatchQueue.main.async {

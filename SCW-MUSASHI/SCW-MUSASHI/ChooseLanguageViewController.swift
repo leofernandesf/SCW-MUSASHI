@@ -31,11 +31,9 @@ class ChooseLanguageViewController: UIViewController {
         bt1.setImage(checkOff, for: .normal)
         bt2.setImage(checkOn, for: .normal)
         
-        let ip = defaults.object(forKey: "IP") as! String
-        Helper.GET(urlString: "\(ip)/scw/ws_config/get_labels") { (jsonRecebe) in
+        MusashiService.GET(urlType: .labels) { (jsonRecebe) in
             self.separa(json: jsonRecebe)
         }
-        
         
         // Do any additional setup after loading the view.
     }

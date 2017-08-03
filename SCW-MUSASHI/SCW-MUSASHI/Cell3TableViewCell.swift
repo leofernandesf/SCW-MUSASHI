@@ -19,11 +19,7 @@ class Cell3TableViewCell: UITableViewCell {
         didSet {
             self.load.isHidden = false
             self.loada.startAnimating()
-            let ip = userDefault.object(forKey: "IP") as! String
-            let url = "\(ip)/scw/ws_mobile/get_comments/\(id!)"
-            print(url)
-            Helper.GET(urlString: url) { (result) in
-                
+            MusashiService.GET(urlType: .comments, id: id!.description) { (result) in
                 self.setComentarios(comentarios: result)
             }
         }

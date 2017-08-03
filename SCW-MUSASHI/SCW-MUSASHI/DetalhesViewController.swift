@@ -126,8 +126,8 @@ class DetalhesViewController: UIViewController {
             
             let parameters: [String: Any] = ["id": id, "user": userNome, "status": status]
             print(parameters)
-            let ip = userDefault.object(forKey: "IP") as! String
-            Helper.POST(urlString: "\(ip)/scw/ws_mobile/set_status/", postString: parameters, completion: { (result) in
+            
+            MusashiService.POST(urlType: .status, postString: parameters, completion: { (result) in
                 print(result)
                 if let success = result["success"] as? Bool {
                     if success {

@@ -61,22 +61,22 @@ class PopUpViewController: UIViewController {
         if let CATEGORY = idCategory {
             category = CATEGORY
         }
-        let ip = userDefault.object(forKey: "IP") as! String
-        let url = "\(ip)/scw/ws_issue/change_category/\(id)/\(category)"
+        let url = "\(id)/\(category)"
         print(url)
-        Helper.GET(urlString: url) { (result) in
+        MusashiService.GET(urlType: .changeCategory, id: url) { (result) in
             print(result)
             self.loada.stopAnimating()
             self.load.isHidden = true
             DispatchQueue.main.async {
                 for controller in self.navigationController!.viewControllers as Array {
-                        if controller.isKind(of: HomeViewController.self) {
-                       _ = self.navigationController?.popToViewController(controller as UIViewController, animated: true)
+                    if controller.isKind(of: HomeViewController.self) {
+                        _ = self.navigationController?.popToViewController(controller as UIViewController, animated: true)
                         break
                     }
                 }
             }
         }
+        
     }
     
     /*
